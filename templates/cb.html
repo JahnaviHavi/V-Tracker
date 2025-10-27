@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AB1 Block</title>
-  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <title>CB Block</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <style>
     .container {
@@ -28,7 +27,6 @@
   <div class="container">
     <h1>CB Block</h1>
 
-    <!-- Floor selection -->
     <label for="floor">Select Floor:</label>
     <select id="floor" required>
       <option value="">--Choose Floor--</option>
@@ -38,19 +36,16 @@
       <option value="4">4th Floor</option>
     </select>
 
-    <!-- Cabin selection -->
     <label for="cabin">Select Cabin:</label>
     <select id="cabin" required disabled>
       <option value="">--Choose Cabin--</option>
     </select>
 
-    <!-- Alphabet selection -->
     <label for="alphabet">Select Alphabet:</label>
     <select id="alphabet" required disabled>
       <option value="">--Choose Alphabet--</option>
     </select>
 
-    <!-- Search button -->
     <button id="submitBtn" disabled>Search</button>
 
     <p id="output"></p>
@@ -111,21 +106,17 @@
   });
 
   alphabetSelect.addEventListener("change", function() {
-    if (this.value) {
-      submitBtn.disabled = false;
-    } else {
-      submitBtn.disabled = true;
-    }
+    submitBtn.disabled = !this.value;
   });
 
   submitBtn.addEventListener("click", function() {
-    let floor = floorSelect.value;
     let cabin = cabinSelect.value;
     let alpha = alphabetSelect.value;
 
     output.textContent = "⏳ Checking faculty status...";
 
-    fetch("http://127.0.0.1:5000/check_faculty", {
+    // ✅ Works locally + on Render
+    fetch("{{ url_for('check_faculty') }}", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ block: "CB", cabin: cabin, alpha: alpha })

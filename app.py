@@ -53,7 +53,7 @@ def example():
 # ---------- DATABASE CONFIG ----------
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'adminJanu'
-app.config['MYSQL_PASSWORD'] = 'usbibasidbib'
+app.config['MYSQL_PASSWORD'] = 'LetYourWillBeDoneLord!'
 app.config['MYSQL_DB'] = 'faculty_tracker'
 
 mysql = MySQL(app)

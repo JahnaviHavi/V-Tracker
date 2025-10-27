@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Faculty Status</title>
-  <!-- <link rel="stylesheet" href="styles.css"> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
@@ -28,8 +27,8 @@
     statusDiv.textContent = "Checking...";
     statusDiv.className = "status loading";
 
-    // Send request to Flask backend
-    fetch("http://127.0.0.1:5000/check_faculty_by_name", {
+    // ✅ Flask-relative endpoint (works locally & on Render)
+    fetch("{{ url_for('check_faculty_by_name') }}", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: faculty })

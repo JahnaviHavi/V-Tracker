@@ -32,7 +32,7 @@
 
     try {
       // ✅ Use relative URL instead of localhost (works on Render too)
-      const res = await fetch("{{ url_for('signin') }}", {
+      const res = await fetch("/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -43,7 +43,7 @@
       if (data.message === "Login successful") {
         errorMsg.textContent = "";
         alert("Login successful! ✅");
-        window.location.href = "{{ url_for('option') }}";  // Go to your next page
+        window.location.href = "/option";  // Go to your next page
       } else {
         errorMsg.textContent = data.error || "Invalid credentials";
       }

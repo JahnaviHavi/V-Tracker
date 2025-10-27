@@ -126,7 +126,7 @@
 
     output.textContent = "⏳ Checking faculty status...";
 
-    fetch("http://127.0.0.1:5000/check_faculty", {
+    fetch("/check_faculty", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ block: "AB1", cabin: cabin, alpha: alpha })
