@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Status</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="faculty-container">
+    <h1>Check Faculty Status</h1>
+    <form id="facultyForm">
+      <input type="text" id="facultyName" placeholder="Enter Faculty Name" required>
+      <button type="submit">Check</button>
+    </form>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+  document.getElementById("facultyForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let faculty = document.getElementById("facultyName").value;
+    let statusDiv = document.getElementById("status");
+
+    statusDiv.textContent = "Checking...";
+    statusDiv.className = "status loading";
+
+    // Send request to Flask backend
+    fetch("http://127.0.0.1:5000/check_faculty_by_name", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: faculty })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "present") {
+        statusDiv.textContent = `✅ ${faculty} is Present in ${data.block} Block, Room ${data.room}${data.alphabet}`;
+        statusDiv.className = "status present";
+      } else if (data.status === "absent") {
+        statusDiv.textContent = `❌ ${faculty} is Absent`;
+        statusDiv.className = "status absent";
+      } else {
+        statusDiv.textContent = "⚠️ Faculty not found in database";
+        statusDiv.className = "status absent";
+      }
+    })
+    .catch(err => {
+      statusDiv.textContent = "⚠️ Error connecting to server!";
+      statusDiv.className = "status";
+      console.error(err);
+    });
+  });
+  </script>
+
+</body>
+</html>

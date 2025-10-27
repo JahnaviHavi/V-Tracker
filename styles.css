@@ -1,0 +1,379 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(230, 230, 230);
+}
+
+h1 {
+    color: rgba(17, 16, 17, 0.749);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+@media (max-width: 1100px) {
+    .navbar {
+        width: 80%;
+    }
+}
+
+
+/*  1stpage.html  */
+
+.welcome-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: -50px;
+}
+
+.welcome-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+}
+
+.welcome-container p {
+    margin-bottom: 25px;
+    font-size: 25px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #444;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 50px;
+  background: #000000;
+  color: white;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #f395b9ce;
+}
+
+.btn-alt {
+  background: #000000;
+}
+
+.btn-alt:hover {
+  background: hsl(59, 72%, 67%);
+}
+
+/* signin.html */
+
+.signin-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 50px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+}
+
+.signin-container h1{
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #444;
+}
+
+.signin-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px -10px;
+    border: 1px solid #dfe6e9;
+    border-radius: 50px;
+    outline: none;
+}
+
+.signin-container input:focus {
+    border-color: hsl(59, 72%, 67%);;
+    box-shadow: 0 0 5px rgba(247, 227, 10, 0.5);
+}
+
+.signin-container button {
+    background: #000000;
+    color: white;
+    border: none;
+    margin-top: 15px;
+    padding: 12px;
+    width: 50%;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.signin-container button:hover {
+    background: #f395b9ce;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+
+/* singup.html */
+
+.signup-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  margin: auto;
+}
+
+.signup-container h1 {
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.signup-container input {
+  display: block;
+  width: 90%;
+  padding: 12px;
+  margin: 12px auto;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.signup-container input:focus {
+    outline: none;
+    border-color: #f395b9ce;
+    box-shadow: 0 0 5px rgba(237, 26, 103, 0.5);
+}
+
+.signup-container button {
+  width: 50%;
+  padding: 12px;
+  background: #000000;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.signup-container button:hover {
+  background: hsl(59, 72%, 67%);
+}
+
+.signup-container p {
+  margin-top: 15px;
+  color: #555;
+}
+
+
+
+/* block html */
+
+.option-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  height: 300px;
+  margin: auto;
+}
+
+.option-container h1 {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.option-card {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  width: 200px;
+  height: 120px;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+}
+
+.option-card p {
+  font-weight: bold;
+  color: #444;
+}
+
+.option-card:hover {
+  border-color: #0984e3;
+  box-shadow: 0px 6px 15px rgba(9,132,227,0.2);
+  transform: translateY(-5px);
+}
+
+.option-card.selected {
+  border-color: #0984e3;
+  box-shadow: 0px 6px 15px rgba(9,132,227,0.3);
+}
+
+
+
+/* name.html */
+
+.faculty-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  height: 270px;
+  margin: auto;
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.loading {
+  color: blue;
+}
+
+.present {
+  color: green;
+}
+
+.absent {
+  color: red;
+}
+
+
+.faculty-container input {
+  display: block;
+  width: 90%;
+  padding: 12px;
+  margin: 12px auto;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.faculty-container input:focus {
+    outline: none;
+    border-color: #280fc9ce;
+    box-shadow: 0 0 5px rgba(67, 54, 208, 0.5);
+}
+
+.faculty-container button {
+  width: 30%;
+  padding: 12px;
+  background: #000000;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.faculty-container button:hover {
+  background: hsl(258, 80%, 40%);
+}
+
+
+/* ab1.html, ab2.html , cb.html */
+
+.container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 470px;
+  margin: auto;
+}
+
+#floor {
+  display: block;
+  width: 90%;
+  padding: 12px;
+  margin: 12px auto;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+#cabin {
+  display: block;
+  width: 90%;
+  padding: 12px;
+  margin: 12px auto;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+#alphabet {
+  display: block;
+  width: 90%;
+  padding: 12px;
+  margin: 12px auto;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.container button {
+  width: 30%;
+  padding: 12px;
+  background: #000000;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container button:hover {
+  background: hsl(258, 80%, 40%);
+}
+

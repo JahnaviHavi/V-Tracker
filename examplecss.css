@@ -1,0 +1,50 @@
+.option-container {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.option-container h1 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.option-card {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+}
+
+.option-card img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.option-card p {
+  font-weight: bold;
+  color: #444;
+}
+
+.option-card:hover {
+  border-color: #0984e3;
+  box-shadow: 0px 6px 15px rgba(9,132,227,0.2);
+  transform: translateY(-5px);
+}
+
+.option-card.selected {
+  border-color: #0984e3;
+  box-shadow: 0px 6px 15px rgba(9,132,227,0.3);
+}

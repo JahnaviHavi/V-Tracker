@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Block</title>
+  <link rel="stylesheet" href="examplecss.css">
+</head>
+<body>
+  <div class="option-container">
+    <h1>Choose Block</h1>
+    <div class="options">
+      
+      <div class="option-card" onclick="goToPage('ab1.html')">
+        <img src="ab1.png" alt="AB1">
+        <p>AB1</p>
+      </div>
+
+      <div class="option-card" onclick="goToPage('cb.html')">
+        <img src="cb.png" alt="CB">
+        <p>CB</p>
+      </div>
+
+      <div class="option-card" onclick="goToPage('ab2.html')">
+        <img src="ab2.png" alt="AB2">
+        <p>AB2</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function goToPage(page) {
+      // Add visual feedback before navigation
+      document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
+      
+      // Redirect after short delay
+      setTimeout(() => {
+        window.location.href = page;
+      }, 300);
+    }
+  </script>
+</body>
+</html>

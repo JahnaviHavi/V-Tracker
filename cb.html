@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AB1 Block</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      text-align: center;
+    }
+    select, button {
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+    }
+    #output {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CB Block</h1>
+
+    <!-- Floor selection -->
+    <label for="floor">Select Floor:</label>
+    <select id="floor" required>
+      <option value="">--Choose Floor--</option>
+      <option value="1">1st Floor</option>
+      <option value="2">2nd Floor</option>
+      <option value="3">3rd Floor</option>
+      <option value="4">4th Floor</option>
+    </select>
+
+    <!-- Cabin selection -->
+    <label for="cabin">Select Cabin:</label>
+    <select id="cabin" required disabled>
+      <option value="">--Choose Cabin--</option>
+    </select>
+
+    <!-- Alphabet selection -->
+    <label for="alphabet">Select Alphabet:</label>
+    <select id="alphabet" required disabled>
+      <option value="">--Choose Alphabet--</option>
+    </select>
+
+    <!-- Search button -->
+    <button id="submitBtn" disabled>Search</button>
+
+    <p id="output"></p>
+  </div>
+
+  <script>
+  const floorSelect = document.getElementById("floor");
+  const cabinSelect = document.getElementById("cabin");
+  const alphabetSelect = document.getElementById("alphabet");
+  const submitBtn = document.getElementById("submitBtn");
+  const output = document.getElementById("output");
+
+  const cabins = {
+    1: ["101", "102", "103", "110"],
+    2: ["201", "202", "205", "210", "219"],
+    3: ["301", "305", "310", "315", "327"],
+    4: ["416", "417", "421"]
+  };
+
+  const alphabets = ["A", "B", "C", "D", "E"];
+
+  floorSelect.addEventListener("change", function() {
+    let floor = this.value;
+    cabinSelect.innerHTML = '<option value="">--Choose Cabin--</option>';
+
+    if (floor && cabins[floor]) {
+      cabins[floor].forEach(cabin => {
+        let opt = document.createElement("option");
+        opt.value = cabin;
+        opt.textContent = cabin;
+        cabinSelect.appendChild(opt);
+      });
+      cabinSelect.disabled = false;
+      alphabetSelect.disabled = true;
+      submitBtn.disabled = true;
+    } else {
+      cabinSelect.disabled = true;
+      alphabetSelect.disabled = true;
+      submitBtn.disabled = true;
+    }
+  });
+
+  cabinSelect.addEventListener("change", function() {
+    alphabetSelect.innerHTML = '<option value="">--Choose Alphabet--</option>';
+    if (this.value) {
+      alphabets.forEach(alpha => {
+        let opt = document.createElement("option");
+        opt.value = alpha;
+        opt.textContent = alpha;
+        alphabetSelect.appendChild(opt);
+      });
+      alphabetSelect.disabled = false;
+      submitBtn.disabled = true;
+    } else {
+      alphabetSelect.disabled = true;
+      submitBtn.disabled = true;
+    }
+  });
+
+  alphabetSelect.addEventListener("change", function() {
+    if (this.value) {
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.disabled = true;
+    }
+  });
+
+  submitBtn.addEventListener("click", function() {
+    let floor = floorSelect.value;
+    let cabin = cabinSelect.value;
+    let alpha = alphabetSelect.value;
+
+    output.textContent = "⏳ Checking faculty status...";
+
+    fetch("http://127.0.0.1:5000/check_faculty", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ block: "CB", cabin: cabin, alpha: alpha })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "present") {
+        output.textContent = `✅ Faculty ${data.name || ''} is Present`;
+        output.style.color = "green";
+      } else {
+        output.textContent = "❌ No Faculty Present in this cabin";
+        output.style.color = "red";
+      }
+    })
+    .catch(err => {
+      output.textContent = "⚠️ Error connecting to server!";
+      output.style.color = "orange";
+      console.error(err);
+    });
+  });
+  </script>
+
+</body>
+</html>
