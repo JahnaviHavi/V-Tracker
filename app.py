@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import MySQLdb.cursors
@@ -6,6 +6,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route('/')
+def home():
+    return render_template('open.html')
 
 
 # MySQL database config
@@ -112,5 +116,8 @@ def update_sensor_status_by_location():
     cursor.close()
     return jsonify({'message': 'Faculty status updated successfully'})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
