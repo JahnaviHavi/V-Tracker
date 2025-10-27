@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Select Block</title>
-  <link rel="stylesheet" href="styles.css">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
   <div class="option-container">
@@ -12,15 +13,18 @@
     <div class="options">
       
       <div class="option-card" onclick="goToPage('ab1.html')">
-        <p>AB1<br><br>Sarvepalli Radhakrishnan Block</p>
+        <img src="ab1.png" alt="AB1">
+        <p>AB1</p>
       </div>
 
       <div class="option-card" onclick="goToPage('cb.html')">
-        <p>CB<br><br>Mahatma Gandhi Block</p>
+        <img src="cb.png" alt="CB">
+        <p>CB</p>
       </div>
 
       <div class="option-card" onclick="goToPage('ab2.html')">
-        <p>AB2<br><br>APJ Abdul Kalam Block</p>
+        <img src="ab2.png" alt="AB2">
+        <p>AB2</p>
       </div>
 
     </div>
