@@ -12,7 +12,7 @@
     <h1>Choose Block</h1>
     <div class="options">
       
-      <div class="option-card" onclick="goToPage('ab1.html')">
+    <!--  <div class="option-card" onclick="goToPage('ab1.html')">
         <p>AB1<br><br>Sarvepalli Radhakrishnan Block</p>
       </div>
 
@@ -23,7 +23,19 @@
       <div class="option-card" onclick="goToPage('ab2.html')">
         <p>AB2<br><br>APJ Abdul Kalam Block</p>
       </div>
+    -->
+       <div class="option-card" onclick="window.location.href='{{ url_for('ab1') }}'">
+      <p>AB1<br><br>Sarvepalli Radhakrishnan Block</p>
+      </div>
 
+      <div class="option-card" onclick="window.location.href='{{ url_for('cb') }}'">
+        <p>CB<br><br>Mahatma Gandhi Block</p>
+      </div>
+
+      <div class="option-card" onclick="window.location.href='{{ url_for('ab2') }}'">
+        <p>AB2<br><br>APJ Abdul Kalam Block</p>
+      </div>
+      
     </div>
   </div>
 

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
   <div class="signin-container">
@@ -19,43 +18,40 @@
   </div>
 
   <script>
-  document.getElementById("signinForm").addEventListener("submit", function(event) {
+  document.getElementById("signinForm").addEventListener("submit", async function(event) {
     event.preventDefault();
-    
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let errorMsg = document.getElementById("error-msg");
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const errorMsg = document.getElementById("error-msg");
 
     if (!email.endsWith("@vitapstudent.ac.in")) {
       errorMsg.textContent = "Please use your university email (@vitapstudent.ac.in)";
       return;
     }
 
-    // Send signin data to Flask backend
-    fetch("http://127.0.0.1:5000/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
+    try {
+      // ✅ Use relative URL instead of localhost (works on Render too)
+      const res = await fetch("{{ url_for('signin') }}", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
       if (data.message === "Login successful") {
         errorMsg.textContent = "";
         alert("Login successful! ✅");
-        window.location.href = "option.html";
+        window.location.href = "{{ url_for('option') }}";  // Go to your next page
       } else {
         errorMsg.textContent = data.error || "Invalid credentials";
       }
-    })
-    .catch(err => {
+    } catch (err) {
       errorMsg.textContent = "⚠️ Error connecting to server!";
       console.error(err);
-    });
+    }
   });
   </script>
-
 </body>
 </html>

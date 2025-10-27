@@ -7,19 +7,58 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 CORS(app)
 
+#---------- HOME ----------
 @app.route('/')
 def home():
     return render_template('open.html')
 
 
-# MySQL database config
+# ---------- OTHER HTML PAGES ----------
+@app.route('/signinpage')
+def signinpage():
+    return render_template('signin.html')
+
+@app.route('/signuppage')
+def signuppage():
+    return render_template('signup.html')
+
+@app.route('/option')
+def option():
+    return render_template('option.html')
+
+@app.route('/block')
+def block():
+    return render_template('block.html')
+
+@app.route('/ab1')
+def ab1():
+    return render_template('ab1.html')
+
+@app.route('/ab2')
+def ab2():
+    return render_template('ab2.html')
+
+@app.route('/cb')
+def cb():
+    return render_template('cb.html')
+
+@app.route('/name')
+def name():
+    return render_template('name.html')
+
+@app.route('/example')
+def example():
+    return render_template('example.html')
+
+# ---------- DATABASE CONFIG ----------
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'adminJanu'
-app.config['MYSQL_PASSWORD'] = 'LetYourWillBeDoneLord!'
+app.config['MYSQL_PASSWORD'] = 'usbibasidbib'
 app.config['MYSQL_DB'] = 'faculty_tracker'
 
 mysql = MySQL(app)
 
+# ---------- SIGNUP ----------
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -49,6 +88,8 @@ def signup():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+
+# ---------- SIGNIN ----------
 @app.route('/signin', methods=['POST'])
 def signin():
     data = request.get_json()
@@ -65,6 +106,8 @@ def signin():
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
 
+
+# ---------- FACULTY STATUS CHECK ----------
 @app.route('/check_faculty_by_name', methods=['POST'])
 def check_faculty_by_name():
     data = request.get_json()
@@ -83,6 +126,7 @@ def check_faculty_by_name():
     else:
         return jsonify({'error': 'Faculty not found'}), 404
 
+
 @app.route('/check_faculty', methods=['POST'])
 def check_faculty():
     data = request.get_json()
@@ -98,6 +142,7 @@ def check_faculty():
         return jsonify({'status': faculty['status'], 'name': faculty['name']})
     else:
         return jsonify({'status': 'absent'})
+
 
 @app.route('/update_sensor_status_by_location', methods=['POST'])
 def update_sensor_status_by_location():
@@ -116,8 +161,9 @@ def update_sensor_status_by_location():
     cursor.close()
     return jsonify({'message': 'Faculty status updated successfully'})
 
+
+# ---------- RUN APP ----------
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
