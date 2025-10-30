@@ -27,30 +27,29 @@
     statusDiv.textContent = "Checking...";
     statusDiv.className = "status loading";
 
-    // ✅ Flask-relative endpoint (works locally & on Render)
-    fetch("{{ url_for('check_faculty_by_name') }}", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: faculty })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "present") {
-        statusDiv.textContent = `✅ ${faculty} is Present in ${data.block} Block, Room ${data.room}${data.alphabet}`;
-        statusDiv.className = "status present";
-      } else if (data.status === "absent") {
-        statusDiv.textContent = `❌ ${faculty} is Absent`;
-        statusDiv.className = "status absent";
-      } else {
-        statusDiv.textContent = "⚠️ Faculty not found in database";
-        statusDiv.className = "status absent";
-      }
-    })
-    .catch(err => {
-      statusDiv.textContent = "⚠️ Error connecting to server!";
-      statusDiv.className = "status";
-      console.error(err);
-    });
+    // Fetch ThingSpeak value first
+    fetch("https://api.thingspeak.com/channels/463304/fields/1/last")
+      .then(res => res.text())
+      .then(value => {
+        value = value.trim();
+        if (value === "1") {
+          // ThingSpeak value is 1, Faculty Present; no Flask check
+          statusDiv.textContent = `✅ ${faculty} is Present in Block, Room`;
+          statusDiv.className = "status present";
+        } else if (value === "0") {
+          // ThingSpeak value is 0, Faculty Absent
+          statusDiv.textContent = `❌ ${faculty} is Absent`;
+          statusDiv.className = "status absent";
+        } else {
+          statusDiv.textContent = "⚠️ Error fetching ThingSpeak value!";
+          statusDiv.className = "status";
+        }
+      })
+      .catch(err => {
+        statusDiv.textContent = "⚠️ Error connecting to ThingSpeak!";
+        statusDiv.className = "status";
+        console.error(err);
+      });
   });
   </script>
 
