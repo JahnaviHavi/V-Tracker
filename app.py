@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from flask_cors import CORS
 import MySQLdb.cursors
 import os
+import requests
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
@@ -58,6 +59,34 @@ def cb():
 def name():
     return render_template('name.html')
 
+# ---------- THINGSPEAK SYNC FUNCTION (ONLY FOR SATYANARAYANA MORU) ----------
+def sync_satyanarayana_from_thingspeak():
+    """
+    Fetches latest sensor value from ThingSpeak and updates status 
+    ONLY for Satyanarayana Moru (CB, 229, D)
+    """
+    try:
+        # Fetch latest value from ThingSpeak
+        response = requests.get("https://api.thingspeak.com/channels/463304/fields/1/last", timeout=5)
+        sensor_value = int(response.text.strip())  # Will be 1 or 0
+        
+        # Convert to status
+        status = "present" if sensor_value == 1 else "absent"
+        
+        # Update ONLY for Satyanarayana Moru
+        with mysql.connection.cursor() as cursor:
+            cursor.execute("""
+                UPDATE faculty 
+                SET status = %s 
+                WHERE block = 'CB' AND room = '229' AND alphabet = 'D'
+            """, (status,))
+            mysql.connection.commit()
+        
+        return status
+    except Exception as e:
+        print(f"Error syncing from ThingSpeak: {e}")
+        return None
+
 # ---------- SIGNUP ----------
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -71,7 +100,6 @@ def signup():
     
     try:
         with mysql.connection.cursor() as cursor:
-            # Removed CREATE TABLE - do this once via setup script
             cursor.execute("INSERT INTO users (name, mobile, email, password) VALUES (%s, %s, %s, %s)",
                            (name, mobile, email, hashed_password))
             mysql.connection.commit()
@@ -110,6 +138,14 @@ def check_faculty_by_name():
             faculty = cursor.fetchone()
         
         if faculty:
+            # If this is Satyanarayana Moru, sync from ThingSpeak first
+            if (faculty['block'] == 'CB' and 
+                faculty['room'] == '229' and 
+                faculty['alphabet'] == 'D'):
+                updated_status = sync_satyanarayana_from_thingspeak()
+                if updated_status:
+                    faculty['status'] = updated_status
+            
             return jsonify({
                 'status': faculty['status'],
                 'block': faculty['block'],
@@ -129,6 +165,10 @@ def check_faculty():
     alphabet = data.get('alpha')
     
     try:
+        # If checking Satyanarayana Moru's cabin, sync from ThingSpeak first
+        if block == 'CB' and room == '229' and alphabet == 'D':
+            sync_satyanarayana_from_thingspeak()
+        
         with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
             cursor.execute("SELECT * FROM faculty WHERE block=%s AND room=%s AND alphabet=%s", 
                            (block, room, alphabet))
