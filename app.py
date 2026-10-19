@@ -181,7 +181,7 @@ def check_faculty():
     except Exception as e:
         return jsonify({'error': 'Database error'}), 500
 
-@app.route('/update_sensor_status_by_location', methods=['POST'])
+'''@app.route('/update_sensor_status_by_location', methods=['POST'])
 def update_sensor_status_by_location():
     data = request.get_json()
     block = data.get('block')
@@ -199,7 +199,7 @@ def update_sensor_status_by_location():
             mysql.connection.commit()
         return jsonify({'message': 'Faculty status updated successfully'})
     except Exception as e:
-        return jsonify({'error': 'Database error'}), 500
+        return jsonify({'error': 'Database error'}), 500'''
 
 # ---------- RUN APP ----------
 if __name__ == "__main__":
